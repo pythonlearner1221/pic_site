@@ -9,7 +9,7 @@ class PostAdmin(admin.ModelAdmin):
     fields = ('title','large_image_tag','tags','category','hidden','pic_index','pic_size')
     date_hierarchy = 'created_time'
     list_per_page = 20
-    search_fields = ('title',)
+    search_fields = ('title','url')
     ordering=('-id','-created_time',)
     filter_horizontal = ('tags',)
     readonly_fields = ('image_tag','large_image_tag')
