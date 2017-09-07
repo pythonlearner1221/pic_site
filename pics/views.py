@@ -345,7 +345,7 @@ def random_category(request,category):
 
 def choose(request):
     today = datetime.now().date()
-    pic = Pics.objects.filter(hidden=0,tags__isnull=True,created_time__lt=today).order_by('id').last()
+    pic = Pics.objects.filter(hidden=0,tags__isnull=True,created_time__lt=today).order_by('created_time','id').last()
     return render(request,'pics/choose.html',context={
         'pic':pic,
     })
@@ -353,23 +353,23 @@ def choose(request):
 def choose_tag(request,tag):
     today = datetime.now().date()
     if tag =='1':
-        pic = Pics.objects.filter(hidden=0,tags__isnull=True,created_time__lt=today).order_by('id').last()
+        pic = Pics.objects.filter(hidden=0,tags__isnull=True,created_time__lt=today).order_by('created_time','id').last()
         pic.hidden=1
         if pic.category == 'pic':
             pic.tags.add(Tags.objects.get(name='妹子图片'))
         if pic.category == 'gif':
             pic.tags.add(Tags.objects.get(name='妹子动图'))
-        pic.created_time = datetime.now().date()
+        pic.created_time = datetime.now().date()-timedelta(days=1)
         pic.save()
     if tag == '0':
-        pic = Pics.objects.filter(hidden=0, tags__isnull=True,created_time__lt=today).order_by('id').last()
+        pic = Pics.objects.filter(hidden=0, tags__isnull=True,created_time__lt=today).order_by('created_time','id').last()
         pic.hidden=0
         pic.tags.add(Tags.objects.get(name='其他'))
         pic.save()
     if tag == '2':
-        pic = Pics.objects.filter(hidden=0, tags__isnull=True, created_time__lt=today).order_by('id').last()
+        pic = Pics.objects.filter(hidden=0, tags__isnull=True, created_time__lt=today).order_by('created_time','id').last()
         pic.delete()
-    new_pic = Pics.objects.filter(hidden=0,tags__isnull=True,created_time__lt=today).order_by('id').last()
+    new_pic = Pics.objects.filter(hidden=0,tags__isnull=True,created_time__lt=today).order_by('created_time','id').last()
     return render(request, 'pics/choose.html', context={
         'pic': new_pic,
     })

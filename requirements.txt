@@ -1,0 +1,15 @@
+beautifulsoup4==4.6.0
+bs4==0.0.1
+certifi==2017.7.27.1
+chardet==3.0.4
+Django==1.11.4
+gunicorn==19.7.1
+idna==2.6
+lxml==3.8.0
+Markdown==2.6.9
+olefile==0.44
+Pillow==4.2.1
+pkg-resources==0.0.0
+pytz==2017.2
+requests==2.18.4
+urllib3==1.22
