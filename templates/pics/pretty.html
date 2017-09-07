@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load post_tags %}
+
+
+{% block paginator %}
+{% if is_paginated %}
+<div class="ui pagination menu">
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}" class="item">上一页</a>
+{% endif %}
+{% if first %}
+<a href="?page=1" class="item">1</a>
+{% endif %}
+{% if left %}
+{% if left_has_more %}
+    <span class="item">...</span>
+{% endif %}
+{% for i in left %}
+    <a href="?page={{ i }}" class="item">{{ i }}</a>
+{% endfor %}
+{% endif %}
+<a class="item" href="?page={{ page_obj.number }}" style="color: red">{{ page_obj.number }}</a>
+{% if right %}
+{% for i in right %}
+    <a href="?page={{ i }}" class="item">{{ i }}</a>
+{% endfor %}
+{% if right_has_more %}
+    <span class="item">...</span>
+{% endif %}
+{% endif %}
+{% if last %}
+<a href="?page={{ paginator.num_pages }}" class="item">{{ paginator.num_pages }}</a>
+{% endif %}
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}" class="item">下一页</a>
+{% endif %}
+{% block jump %}
+{% endblock jump %}
+</div>
+{% endif %}
+{% endblock paginator %}
+
+{% block main %}
+  <div class="ui blue segment">
+  {% for pic in pics %}
+      <div>
+        <img class="ui centered large image" src="{{ pic.url }}">
+      </div>
+      <div class="ui divider"></div>
+  {% endfor %}
+  </div>
+
+{% endblock main %}
+
+{% block tags %}
+    <div class="item">
+  <div class="ui blue segment" style="width:100%">
+  <div class="content">
+    <h3 class="header">最新文章</h3>
+    {% get_recent_posts as recent_post_list %}
+    <div class="ui list">
+      {% for post in recent_post_list %}
+      <div class="item">
+				<a href="{{ post.get_absolute_url }}"><i class="black book icon"></i>
+					<span class="ui blue label" style="padding:4px">{{ post.category.name }}</span>
+					--{{ post.get_date }}<br/>{{ post.short_title }}
+				</a>
+      </div>
+      {% empty %}
+      暂无文章！
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="item">
+    <div class="ui blue segment" style="width:100%">
+      <div class="content">
+        <h3 class="header">分类</h3>
+        <div class="ui list">
+            <div class="item">
+              <a href="{% url 'pics:pretty_category' 'tupian' %}"><i class="grey folder icon"></i>妹子图片</a>
+            </div>
+            <div class="item">
+              <a href="{% url 'pics:pretty_category' 'dongtu' %}"><i class="grey folder icon"></i>妹子动图</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+{% endblock tags %}
+
+
+{% block title %}
+<title>后宫佳丽三千多人</title>
+{% endblock title %}

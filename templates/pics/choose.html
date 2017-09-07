@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load post_tags %}
+
+
+{% block main %}
+  <div class="ui blue segment">
+		<div align="center">
+				<a class="ui centered item" href="{% url 'pics:choose_tag' '1' %}"><button class="ui big blue button"><span class="ui item">隐藏</span></button></a>
+				<a class="ui centered item" href="{% url 'pics:choose_tag' '0' %}"><button class="ui big blue button"><span class="ui item">下一张</span></button></a>
+        <a class="ui centered item" href="{% url 'pics:choose_tag' '2' %}"><button class="ui big blue button"><span class="ui item">删除</span></button></a>
+
+    </div>
+		<div class="ui divider"></div>
+    <div class="item">{{ pic.created_time }}</div>
+    <div>
+      <img class="ui centered large image" src="{{ pic.url }}">
+    </div>
+
+
+
+  </div>
+{% endblock main %}
+
+{#{% block tags %}#}
+{#  <div class="item">#}
+{#		<div class="ui blue segment" style="width:100%">#}
+{#			<div class="content">#}
+{#				<h3 class="header">最新文章</h3>#}
+{#				{% get_recent_posts as recent_post_list %}#}
+{#				<div class="ui list">#}
+{#					{% for post in recent_post_list %}#}
+{#					<div class="item">#}
+{#						<a href="{{ post.get_absolute_url }}"><i class="black book icon"></i>#}
+{#							<span class="ui blue label" style="padding:4px">{{ post.category.name }}</span>#}
+{#							--{{ post.get_date }}<br/>{{ post.short_title }}#}
+{#						</a>#}
+{#					</div>#}
+{#					{% empty %}#}
+{#					暂无文章！#}
+{#					{% endfor %}#}
+{#				</div>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
+{##}
+{#	  <div class="item">#}
+{#			<div class="ui blue segment" style="width:100%">#}
+{#				<div class="content">#}
+{#					<h3 class="header">分类</h3>#}
+{#					<div class="ui list">#}
+{#							<div class="item">#}
+{#								<a href="{% url 'pics:random_category' 'tupian' %}"><i class="grey folder icon"></i>妹子图片</a>#}
+{#							</div>#}
+{#							<div class="item">#}
+{#								<a href="{% url 'pics:random_category' 'dongtu' %}"><i class="grey folder icon"></i>妹子动图</a>#}
+{#							</div>#}
+{#					</div>#}
+{#			</div>#}
+{#		</div>#}
+{#  </div>#}
+{#{% endblock tags %}#}
+
+{% block title %}
+<title>分类</title>
+{% endblock title %}

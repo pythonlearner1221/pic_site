@@ -1,0 +1,78 @@
+{% extends 'dailypost/postbase.html' %}
+
+{% block main %}
+  <div class="ui blue segment">
+    <div class="content">
+      <h3 class="header"><i class="book icon"></i>{{ post.title }}
+        <a href="{% url 'dailypost:category' post.category.pk %}" class="ui blue label" style="padding:4px">{{ post.category.name }}</a>
+      </h3>
+      <div class="meta">
+        <div class="date">{{ post.get_date }} <span class=""><i class="unhide icon"></i>{{ post.views }}阅读</span></div>
+      </div>
+      <div class="ui hidden divider"></div>
+      <div class="description" style="">{{ post.body|safe }}</div>
+      <div class="ui divider"></div>
+      <div class="meta">
+        {% if previous_post %}
+        <a href="{{ previous_post.get_absolute_url }}"><button class="ui left labeled blue icon button"><i class="left arrow icon"></i> 上一篇 </button></a>
+        {% endif %}
+        {% if next_post %}
+        <a href="{{ next_post.get_absolute_url }}"><button class="ui right floated right blue labeled icon button"><i class="right arrow icon"></i> 下一篇 </button></a>
+        {% endif %}
+      </div>
+    </div>
+
+    <h3 class="ui horizontal divider header" id="comment-area"><i class="comments icon"></i>评论区</h3>
+
+    <div class="ui comments" style="max-width:100%">
+      {% for comment in comment_list %}
+      <div class="comment">
+        <div class="content">
+          <div class="author"><i class="user icon"></i>{{ comment.name }}</div>
+          <div class="metadata">
+            <span class="date">{{ comment.created_time }}</span>
+          </div>
+          <div class="text">{{ comment.text|safe }}</div>
+        </div>
+
+      </div>
+      {% empty %}
+        <div class="content">暂无评论</div>
+      {% endfor %}
+    </div>
+
+    <h3 class="ui horizontal divider header"><i class="comment icon"></i>发表评论</h3>
+
+    <form class="ui form" action="{% url 'comments:post_comment' post.pk %}" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="field">
+          <label for="{{ form.name.id_for_label }}">昵称：</label>
+          {{ form.name }}
+          {{ form.name.errors }}
+        </div>
+        <div class="field">
+          <label for="{{ form.text.id_for_label }}">评论：</label>
+          {{ form.text }}
+          {{ form.text.errors }}
+          <button type="submit" class="ui button">发表</button>
+        </div>
+      </div>    <!-- row -->
+    </form>
+  </div>
+{% endblock main %}
+
+{% block title %}
+<title>{{ post.title }}--欢迎来到toosiki的博客</title>
+{% endblock title %}
+
+{#{% block toc %}#}
+{#<div class="item">#}
+{#  <div class="ui blue segment" style="width:100%">#}
+{#    <div class="content">#}
+{#      <h3 class="header">文章目录</h3>#}
+{#      {{ post.toc }}#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#{% endblock toc %}#}

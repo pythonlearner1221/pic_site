@@ -1,0 +1,41 @@
+{% extends 'dailypost/postbase.html' %}
+
+
+{% block main %}
+<div class="ui very relaxed divided items">
+  {% if error_msg %}
+    <div class="item"><p>{{ error_msg }}</p></div>
+  {% endif %}
+  {% for post in post_list %}
+  <div class="item">
+    <a href="{{ post.get_absolute_url }}" class="image" style="overflow:hidden;vertical-align:middle;height:150px">
+      <img class="image" src="{{ post.image }}">
+    </a>
+{#    <div style="background-image:url({{ post.image }});background-repeat: no-repeat;background-position:center center;#}
+{#     background-size: cover;width:150px;height:150px;margin-right:10px;">#}
+{#    </div>#}
+    <div class="content">
+      <a class="header" href="{{ post.get_absolute_url }}"><i class="book icon"></i>{{ post.title }}</a>
+      <div class="meta">
+        <span class=""><i class="bullseye icon"></i>{{ post.get_date }}</span>
+      </div>
+
+      <div class="description">
+        <p>{{ post.excerpt }}</p>
+      </div>
+      <div class="meta">
+        <span><a class="ui blue label" style="padding:4px">{{ post.category }}</a></span>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="item">暂未发布文章</div>
+  {% endfor %}
+</div>
+{% endblock main %}
+
+{% block title %}
+<title>{{ from }}--欢迎来到toosiki</title>
+{% endblock title %}
+
+

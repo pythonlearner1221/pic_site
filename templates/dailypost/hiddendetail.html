@@ -1,0 +1,33 @@
+{% extends 'dailypost/postbase.html' %}
+
+{% block main %}
+  <div class="ui blue segment">
+    <div class="content">
+      <h3 class="header"><i class="book icon"></i>{{ post.title }}
+        <a class="ui blue label" style="padding:4px">{{ post.category}}</a>
+      </h3>
+      <div class="meta">
+        <div class="date">{{ post.get_date }}</div>
+      </div>
+      <div class="ui hidden divider"></div>
+      <div class="description" style="">{{ post.body|safe }}</div>
+      <div class="ui divider"></div>
+    </div>
+
+  </div>
+{% endblock main %}
+
+{% block title %}
+<title>{{ post.title }}--欢迎来到toosiki的博客</title>
+{% endblock title %}
+
+{#{% block toc %}#}
+{#<div class="item">#}
+{#  <div class="ui blue segment" style="width:100%">#}
+{#    <div class="content">#}
+{#      <h3 class="header">文章目录</h3>#}
+{#      {{ post.toc }}#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#{% endblock toc %}#}

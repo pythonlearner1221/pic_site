@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{% static 'css/semantic.css' %}">
+  <link rel="stylesheet" href="{% static 'css/github.css' %}">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/exporting.js' %}"></script>
+  <script src="{% static 'js/highcharts-more.js' %}"></script>
+  <script src="{% static 'js/highcharts.js' %}"></script>
+  <script src="{% static 'js/semantic.js' %}"></script>
+  {% block highlight %}
+  {% endblock highlight %}
+  <meta charset="UTF-8">
+  {% block title %}
+  {% endblock title %}
+  <style>
+    body {
+        background-image:url('{% static 'images/background.jpg' %}');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .main.container {
+        background-color:rgba(0,0,0,0.1);
+        padding:0 6px 0 6px;
+        margin:50px
+    }
+    .sub.container {
+      background-color:white;
+    }
+  </style>
+</head>
+<body>
+  <div class="ui fixed borderless menu" style="background-color:rgba(0,0,0,0);border:1px;box-shadow:None;">
+    <div class="ui sub container" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)">
+      <a class="item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/merlin-logo.jpg' %}"></a>
+      <a class="item" href="{% url 'dailypost:index' %}">首页</a>
+      <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
+      <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
+      <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
+      <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
+      <a class="item" href="{% url 'pics:pics' %}">大好河山</a>
+      {% block search %}
+      {% endblock search %}
+    </div>
+  </div>
+
+  <div class="ui main container">
+    <div class="ui sub container">
+      <div class="ui divider"></div>
+      <div class="ui basic segment" >
+        <div class="ui grid" style="padding:0 10px 0 10px">
+          <div class="twelve wide column" style="padding: 0 10px 0 0 ">
+            {% block main %}
+            {% endblock main %}
+
+
+          <div class="ui hidden divider"></div>
+            {% block paginator %}
+            {% endblock paginator %}
+
+          </div>
+
+  {#          <div class="one wide column" style="padding: 0">#}
+  {#            <div class="ui vertical divider"></div>#}
+  {#          </div>#}
+          <div class="four wide column" style="padding: 0 0 0 10px ">
+            <div class="ui items">
+
+              {% block toc %}
+              {% endblock toc %}
+
+              {% block tags %}
+              {% endblock tags %}
+
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+      <div class="ui divider"></div>
+      <div class="ui basic segment">
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
