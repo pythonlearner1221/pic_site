@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from fabric.api import env, run
@@ -22,9 +21,9 @@ def deploy():
     run('cd %s && git pull' % source_folder)
     run("""
         cd {} &&
-        ../env/bin/pip install -r requirements.txt &&
-        ../env/bin/python3 manage.py collectstatic --noinput &&
-        ../env/bin/python3 manage.py migrate
+        ../venv1/bin/pip install -r requirements.txt &&
+        ../venv1/bin/python3 manage.py collectstatic --noinput &&
+        ../venv1/bin/python3 manage.py migrate
         """.format(source_folder))
     sudo('systemctl restart toosiki')
     sudo('service nginx reload')
