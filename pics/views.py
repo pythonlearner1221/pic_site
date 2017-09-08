@@ -17,10 +17,10 @@ class IndexView(ListView):
     template_name = 'pics/index.html'
     context_object_name = 'pics'
     paginate_by = 10
-    ordering=['-created_time','likes','-id']
+    ordering=['-created_time','-likes','-id']
 
-    def get_queryset(self):
-        return super(IndexView,self).get_queryset().filter(hidden=0)
+    # def get_queryset(self):
+    #     return super(IndexView,self).get_queryset().filter(hidden=0)
 
     def get_context_data(self, **kwargs):
         """

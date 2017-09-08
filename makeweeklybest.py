@@ -90,5 +90,5 @@ def weekly_best(xyz):
 
 # for i in range(267,0,-1):
 #     weekly_best(i)
-
-weekly_best(1)
+if __name__=='__main__':
+    weekly_best(1)
