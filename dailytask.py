@@ -26,7 +26,7 @@ def make_weixinpost():
 
 if __name__=='__main__':
     latest = latest_get()
-    for i in range(latest-5,latest+5):
+    for i in range(latest-500,latest+500):
         get_gif(i)
     get_dailypost(1)
     weekly_best(1)
