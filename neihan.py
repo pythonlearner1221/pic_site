@@ -8,11 +8,11 @@ from datetime import datetime,timedelta
 def get_gif(num):
     url = 'http://neihan1024.com/weibofun/weixin/article.php?fid={}&category=weibo_pics&source=1'.format(num)
     try:
-        res = requests.get(url)
+        res = requests.get(url,timeout=5)
         soup = BeautifulSoup(res.text,'lxml')
         if soup.select('p > img') != [] :
             img_url = soup.select('p > img')[0].get('src')
-            res2 = requests.get(img_url)
+            res2 = requests.get(img_url,timeout=5)
             if res2.history or res.status_code != 200:
                 pass
             else:
