@@ -34,9 +34,9 @@ def get_dailypost(xyz):
                     post_list.extend(gifs[0:(30 - len(pics))])
                     post_list.extend(pics)
 
-                elif len(pics)>40 and len(gifs)>40:
-                    post_list.extend(random.sample(gifs[:30], k=15))
-                    post_list.extend(random.sample(pics[:30], k=15))
+                # elif len(pics)>40 and len(gifs)>40:
+                #     post_list.extend(random.sample(gifs[:30], k=15))
+                #     post_list.extend(random.sample(pics[:30], k=15))
 
                 else:
                     post_list.extend(gifs[0:15])
@@ -128,9 +128,9 @@ def get_weixinpost(xyz):
                     post_list.extend(gifs[0:(30 - len(pics))])
                     post_list.extend(pics)
 
-                elif len(pics) > 40 and len(gifs) > 40:
-                    post_list.extend(random.sample(gifs[:30], k=15))
-                    post_list.extend(random.sample(pics[:30], k=15))
+                # elif len(pics) > 40 and len(gifs) > 40:
+                #     post_list.extend(random.sample(gifs[:30], k=15))
+                #     post_list.extend(random.sample(pics[:30], k=15))
 
                 else:
                     post_list.extend(gifs[0:15])

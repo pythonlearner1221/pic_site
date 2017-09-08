@@ -71,9 +71,10 @@ def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_si
 
 
 def latest_get():
+    yesterday = str(datetime.today().date()-timedelta(days=1))
     with lite.connect('db.sqlite3') as con:
         cur = con.cursor()
-        cur.execute("select max(pic_index) from pics_pics")
+        cur.execute("select min(pic_index) from pics_pics where created_time='{}'".format(yesterday))
         res = cur.fetchone()[0]
         latest_get_index = int(res.split('-')[1])
         return latest_get_index
@@ -82,7 +83,7 @@ if __name__ == '__main__':
     pool = Pool()
     latest = latest_get()
     print(latest)
-    pool.map(get_gif,range(latest-2500,latest+500))
+    pool.map(get_gif,range(latest,latest+1000))
     # pool.map(get_gif, range(160000, 179000))
 
 
