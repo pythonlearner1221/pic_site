@@ -80,7 +80,7 @@ def get_dailypost(xyz):
                 for i in dongtu:
                     fuli_for_cl+='[img]'+i+'[/img]\n\n'
                 body_for_cl=body_for_cl+fuli_for_cl
-                path = 'static/for_cl/'+str(today)+'.txt'
+                path = 'static/for_cl/for_cl.txt'
                 title_for_cl = '[每日一莫'+today.strftime('%Y%m%d')[2:]+']'+''.join(re.split(r'[【】]',title))+'\n\n'
                 with open(path,'w',encoding='utf-8') as f:
                     f.write(title_for_cl)
@@ -114,12 +114,12 @@ def get_weixinpost(xyz):
     tag2 = Tags.objects.get(name='妹子动图')
     try:
         if len(HiddenPost.objects.filter(created_time=day, category='微信一莫')) == 0:
-            if len(Pics.objects.filter(created_time=day,pic_size__lt=2000000,pic_size__gt=0)) >= 30:
+            if len(Pics.objects.filter(created_time=day,pic_size__lt=2000000,pic_size__gt=0,hidden=0)) >= 30:
                 post_list = []
 
                 ####likes
-                gifs = Pics.objects.filter(created_time=day, category='gif',pic_size__lt=2000000,pic_size__gt=0).order_by('-likes')
-                pics = Pics.objects.filter(created_time=day, category='pic',pic_size__lt=2000000,pic_size__gt=0).order_by('-likes')
+                gifs = Pics.objects.filter(created_time=day, category='gif',pic_size__lt=2000000,pic_size__gt=0,hidden=0).order_by('-likes')
+                pics = Pics.objects.filter(created_time=day, category='pic',pic_size__lt=2000000,pic_size__gt=0,hidden=0).order_by('-likes')
                 if len(gifs) < 15:
                     post_list.extend(gifs)
                     post_list.extend(pics[0:(30 - len(gifs))])
