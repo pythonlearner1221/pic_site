@@ -8,6 +8,7 @@ from .models import DailyPost,Category
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title','created_time','category','author']
     search_fields = ('title',)
+    ordering = ('-created_time','category')
 
 class CatAdmin(admin.ModelAdmin):
     list_display = ['name',]
