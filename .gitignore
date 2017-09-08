@@ -102,3 +102,6 @@ ENV/
 db.sqlite3
 
 .idea/
+
+#for_cl
+static/for_cl/

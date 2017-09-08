@@ -80,7 +80,7 @@ def get_dailypost(xyz):
                 for i in dongtu:
                     fuli_for_cl+='[img]'+i+'[/img]\n\n'
                 body_for_cl=body_for_cl+fuli_for_cl
-                path = 'for_cl/'+str(today)+'.txt'
+                path = 'static/for_cl/'+str(today)+'.txt'
                 title_for_cl = '[每日一莫'+today.strftime('%Y%m%d')[2:]+']'+''.join(re.split(r'[【】]',title))+'\n\n'
                 with open(path,'w',encoding='utf-8') as f:
                     f.write(title_for_cl)
