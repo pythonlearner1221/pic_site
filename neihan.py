@@ -13,7 +13,7 @@ def get_gif(num):
         if soup.select('p > img') != [] :
             img_url = soup.select('p > img')[0].get('src')
             res2 = requests.get(img_url)
-            if res2.history:
+            if res2.history or res.status_code != 200:
                 pass
             else:
                 pic_size = len(res2.content)
@@ -53,7 +53,9 @@ def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_si
         res = cur.fetchall()
         if len(res) >0:
             try:
-                update = "UPDATE pics_pics set likes={} , created_time='{}' , pic_size = {} WHERE pic_index = '{}'".format(likes,created_time,pic_size,pic_index)
+                update = "UPDATE pics_pics set likes={} , created_time='{}' , pic_size = {} ,\
+                          url = '{}' , category = '{}' ,title='{}' ,hidden={} WHERE pic_index = '{}'"\
+                          .format(likes,created_time,pic_size,url,category,title,hidden,pic_index)
                 cur.execute(update)
                 return 'updated'
             except Exception as e:
@@ -80,7 +82,7 @@ if __name__ == '__main__':
     pool = Pool()
     latest = latest_get()
     print(latest)
-    pool.map(get_gif,range(latest-500,latest+500))
+    pool.map(get_gif,range(latest-2500,latest+500))
     # pool.map(get_gif, range(160000, 179000))
 
 

@@ -253,8 +253,9 @@ def get_toutiaopost(xyz):
         print(e)
 
 # if __name__=='__main__':
-#     pool=Pool()
-#     pool.map(get_dailypost,range(1,2))
+#     for i in range(1,15):
+#         get_dailypost(i)
+#         get_weixinpost(i)
 
 # for i in range(1876,1,-1):
 #     get_dailypost(i)
