@@ -105,3 +105,6 @@ db.sqlite3
 
 #for_cl
 static/for_cl/
+
+#settings
+pic_site/settings.py

@@ -6,16 +6,15 @@
 {% block main %}
   <div class="ui blue segment">
     <div>
+      {% if to %}
+      <a href="{% url from to %}" title="点击再翻一次">
+      {% else %}
+      <a href="{% url from %}">
+      {% endif %}
       <img class="ui centered large image" src="{{ pic.url }}">
+      </a>
     </div>
     <div class="ui divider"></div>
-    <div align="center">
-			{% if to %}
-      	<a class="ui centered item" href="{% url from to %}"><button class="ui big blue button"><span class="ui item">再翻一次</span></button></a>
-			{% else %}
-				<a class="ui centered item" href="{% url from %}"><button class="ui big blue button"><span class="ui item">再翻一次</span></button></a>
-			{% endif %}
-    </div>
 
   </div>
 {% endblock main %}
