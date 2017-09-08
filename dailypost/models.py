@@ -83,8 +83,8 @@ class HiddenPost(models.Model):
     category = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name='文章'
-        verbose_name_plural='文章'
+        verbose_name='隐藏文章'
+        verbose_name_plural='隐藏文章'
 
     def __str__(self):
         return self.title
