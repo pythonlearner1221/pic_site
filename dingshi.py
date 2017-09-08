@@ -22,6 +22,7 @@ def make_weixinpost():
 
 if __name__=='__main__':
     while True:
+        print('开启定时任务')
         if datetime.now().hour == 12:
             latest = latest_get()
             print('昨天获取到',latest,'开始更新')

@@ -27,3 +27,7 @@ def deploy():
         """.format(source_folder))
     sudo('systemctl restart toosiki')
     sudo('service nginx reload')
+    run("""
+        cd {} &&
+        ../venv1/bin/python3 dingshi.py
+        """.format(source_folder))
