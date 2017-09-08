@@ -54,7 +54,6 @@ def weekly_best(xyz):
                     text = '#### 【{}】{}\n![]({})\n'.format((i+1),post_list[i].title,post_list[i].url)
                     body+=text
 
-                fuli = [i.url for i in random.choices(Pics.objects.filter(tags=tag1),k=1)]
                 # dongtu =[i.url for i in random.choices(FuLi.objects.filter(title='动图'),k=4)]
                 # fuli_text,dongtu_text = '#### 【31】福利\n','### 【32】动图\n'
                 # for i in fuli:
@@ -62,7 +61,7 @@ def weekly_best(xyz):
                 # for i in dongtu:
                 #     dongtu_text+='![]('+i+')\n\n'
                 # body = body+fuli_text+dongtu_text
-                image=fuli[0]
+                image=random.choice(Pics.objects.filter(tags=tag1)).url
                 c= DailyPost()
                 c.title=title
                 c.created_time=created_time
@@ -74,13 +73,13 @@ def weekly_best(xyz):
                 c.author=user
                 c.views = views
                 c.save()
-                print(last_sunday,'saved')
+                print(last_sunday,'日文章保存成功')
             else:
                 print('资源太少，凑不够一篇文章')
         else:
             print('没到周一，急什么急')
     except Exception as e:
-        print('save', last_sunday, 'failed')
+        print('保存', last_sunday, '失败')
         print(e)
 
 

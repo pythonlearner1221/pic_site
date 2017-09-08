@@ -57,24 +57,23 @@ def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_si
                           url = '{}' , category = '{}' ,title='{}' ,hidden={} WHERE pic_index = '{}'"\
                           .format(likes,created_time,pic_size,url,category,title,hidden,pic_index)
                 cur.execute(update)
-                return 'updated'
+                return '更新成功'
             except Exception as e:
-                print('update failed')
+                print('更新失败')
                 print(e)
         else:
             try:
                 insert = "INSERT INTO pics_pics (title, url, created_time,likes,category,pic_index,hidden,pic_size) VALUES (?,?,?,?,?,?,?,?)"
                 cur.execute(insert,(title,url,created_time,likes,category,pic_index,hidden,pic_size))
-                return 'inserted'
+                return '插入成功'
             except:
-                print('insert failed')
+                print('插入失败')
 
 
 def latest_get():
-    yesterday = str(datetime.today().date()-timedelta(days=1))
     with lite.connect('db.sqlite3') as con:
         cur = con.cursor()
-        cur.execute("select min(pic_index) from pics_pics where created_time='{}'".format(yesterday))
+        cur.execute("select max(pic_index) from pics_pics")
         res = cur.fetchone()[0]
         latest_get_index = int(res.split('-')[1])
         return latest_get_index
@@ -83,7 +82,7 @@ if __name__ == '__main__':
     pool = Pool()
     latest = latest_get()
     print(latest)
-    pool.map(get_gif,range(latest,latest+1000))
+    pool.map(get_gif,range(latest-500,latest+500))
     # pool.map(get_gif, range(160000, 179000))
 
 
