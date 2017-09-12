@@ -12,33 +12,36 @@ def get_gif(num):
         soup = BeautifulSoup(res.text,'lxml')
         if soup.select('p > img') != [] :
             img_url = soup.select('p > img')[0].get('src')
-            res2 = requests.get(img_url,timeout=5)
-            if res2.history or res.status_code != 200:
+            if 'sinaimg' not in img_url:
                 pass
             else:
-                pic_size = len(res2.content)
-                types = img_url.split('.')[-1]
-                if 'gif' in types:\
-                    category ='gif'
+                res2 = requests.get(img_url,timeout=5)
+                if res2.history:
+                    pass
                 else:
-                    category = 'pic'
-                title = soup.select('p')[0].text.strip()
-                created_time = soup.select('div.info_text')[0].text[:10]
-                today = str(datetime.now().date())
-                days_later = str(datetime.now().date()+timedelta(days=30))
-                if created_time > days_later:
-                    created_time = today
-                    hidden =1
-                elif created_time >today:
-                    created_time = today
-                    hidden=0
-                else:
-                    hidden=0
-                pic_index = 'neihantupian-{}'.format('0'*(6-len(str(num)))+str(num))
-                likes = int(soup.select('body > div:nth-of-type(2)')[0].text.split('\xa0')[0].strip('赞'))
-                result = save_to_sqlite(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
-                print(num,result)
-                # print(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
+                    pic_size = len(res2.content)
+                    types = img_url.split('.')[-1]
+                    if 'gif' in types:\
+                        category ='gif'
+                    else:
+                        category = 'pic'
+                    title = soup.select('p')[0].text.strip()
+                    created_time = soup.select('div.info_text')[0].text[:10]
+                    today = str(datetime.now().date())
+                    days_later = str(datetime.now().date()+timedelta(days=30))
+                    if created_time > days_later:
+                        created_time = today
+                        hidden =1
+                    elif created_time >today:
+                        created_time = today
+                        hidden=0
+                    else:
+                        hidden=0
+                    pic_index = 'neihantupian-{}'.format('0'*(6-len(str(num)))+str(num))
+                    likes = int(soup.select('body > div:nth-of-type(2)')[0].text.split('\xa0')[0].strip('赞'))
+                    result = save_to_sqlite(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
+                    print(num,result)
+                    # print(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
         else:
             pass
     except Exception as e:
