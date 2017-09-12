@@ -330,7 +330,7 @@ class CategoryView(IndexView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryView,self).get_context_data(**kwargs)
-        info = '{}--分类'.format(self.cate)
+        info = '{}'.format(self.cate)
         context['from']=info
         return context
 
@@ -405,6 +405,7 @@ class PostDetailView(DetailView):
             'comment_list':comment_list,
             'previous_post':previous_post,
             'next_post':next_post,
+            'from':'{}-正文'.format(post.category),
         })
         return context
 

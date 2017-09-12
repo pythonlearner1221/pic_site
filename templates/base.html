@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="{% static 'css/semantic.css' %}">
   <link rel="stylesheet" href="{% static 'css/github.css' %}">
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
@@ -13,7 +16,6 @@
   <script src="{% static 'js/semantic.js' %}"></script>
   {% block highlight %}
   {% endblock highlight %}
-  <meta charset="UTF-8">
   {% block title %}
   {% endblock title %}
   <style>
@@ -21,28 +23,61 @@
         background-image:url('{% static 'images/background.jpg' %}');
         background-repeat: no-repeat;
         background-attachment: fixed;
+        padding-top:38px
     }
     .main.container {
         background-color:rgba(0,0,0,0.1);
         padding:0 6px 0 6px;
-        margin:50px
+{#        margin:0 !important;#}
     }
     .sub.container {
       background-color:white;
+{#      margin:0 !important;#}
+    }
+    @media only screen and (max-width: 767px) {
+      .ui.container {
+        width: auto !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .main.container {
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 0;
+      }
+      body {
+        padding-top:30px
+      }
     }
   </style>
 </head>
 <body>
-  <div class="ui fixed borderless menu" style="background-color:rgba(0,0,0,0);border:1px;box-shadow:None;">
-    <div class="ui sub container" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)">
-      <a class="item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
-      <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
-      <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
-      <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
-      <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
-      <a class="item" href="{% url 'pics:pics' %}">朕的江山</a>
-      {% block search %}
-      {% endblock search %}
+  <div class="ui fixed borderless menu grid">
+    <div class="computer tablet only row" style="padding:0">
+{#      <div class="ui sub container" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)">#}
+        <a class="item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
+        <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
+        <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
+        <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
+        <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
+        <a class="item" href="{% url 'pics:pics' %}">朕的江山</a>
+        {% block search %}
+        {% endblock search %}
+{#      </div>#}
+    </div>
+    <div class="mobile only row" style="padding:0">
+      <a class="left item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
+      <div class=" item">{{ from }}</div>
+      <div class="ui dropdown right item">
+        <span class="text">菜单</span>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
+          <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
+          <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
+          <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
+          <a class="item" href="{% url 'pics:pics' %}">朕的江山</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -51,7 +86,7 @@
       <div class="ui divider"></div>
       <div class="ui basic segment" >
         <div class="ui grid" style="padding:0 10px 0 10px">
-          <div class="twelve wide column" style="padding: 0 10px 0 0 ">
+          <div class="sixteen wide mobile twelve wide computer tablet column" style="padding: 0 10px 0 0 ">
             {% block main %}
             {% endblock main %}
 
@@ -65,7 +100,7 @@
   {#          <div class="one wide column" style="padding: 0">#}
   {#            <div class="ui vertical divider"></div>#}
   {#          </div>#}
-          <div class="four wide column" style="padding: 0 0 0 10px ">
+          <div class="four wide computer tablet only column" style="padding: 0 0 0 10px ">
             <div class="ui items">
 
               {% block toc %}
@@ -86,6 +121,11 @@
       </div>
     </div>
   </div>
+  <script>
+    $('.ui.dropdown')
+      .dropdown()
+      ;
+  </script>
 </body>
 
 </html>

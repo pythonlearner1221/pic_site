@@ -7,9 +7,9 @@
   <div class="ui blue segment">
     <div>
       {% if to %}
-      <a href="{% url from to %}" title="点击再翻一次">
+      <a href="{% url temp to %}" title="点击再翻一次">
       {% else %}
-      <a href="{% url from %}" title="点击再翻一次">
+      <a href="{% url temp %}" title="点击再翻一次">
       {% endif %}
       <img class="ui centered large image" src="{{ pic.url }}">
       </a>

@@ -50,6 +50,7 @@ class IndexView(ListView):
 
         # 将分页导航条的模板变量更新到 context 中，注意 pagination_data 方法返回的也是一个字典。
         context.update(pagination_data)
+        context['from'] = '朕的江山'
 
         # 将更新后的 context 返回，以便 ListView 使用这个字典中的模板变量去渲染模板。
         # 注意此时 context 字典中已有了显示分页导航条所需的数据。
@@ -310,6 +311,13 @@ class PrettyView(HiddenView):
     template_name = 'pics/pretty.html'
     ordering=['-created_time','-id']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['from'] = '后宫佳丽'
+        return context
+
+
+
 class PrettyCategoryView(PrettyView):
     def get_queryset(self):
         tag1 = Tags.objects.get(name='妹子图片')
@@ -325,8 +333,9 @@ def random_post(request):
     pic = random.choice(Pics.objects.filter(hidden=1))
     return render(request,'pics/random.html',context={
         'pic':pic,
-        'from':'pics:random',
-        'to':''
+        'temp':'pics:random',
+        'to':'',
+        'from':'朕要翻牌',
     })
 
 def random_category(request,category):
@@ -339,7 +348,7 @@ def random_category(request,category):
     pic = random.choice(Pics.objects.filter(tags=pic_type))
     return render(request, 'pics/random.html', context={
         'pic': pic,
-        'from':'pics:random_category',
+        'temp':'pics:random_category',
         'to':category
     })
 
