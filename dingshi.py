@@ -23,12 +23,12 @@ def make_weixinpost():
 if __name__=='__main__':
     while True:
         print('开启定时任务')
+        latest = latest_get()
+        print('昨天获取到', latest, '开始更新')
+        print('开始进行旧图更新和新图获取')
+        for i in range(latest - 50, latest + 50):
+            get_gif(i)
         if datetime.now().hour == 12:
-            latest = latest_get()
-            print('昨天获取到',latest,'开始更新')
-            print('开始进行旧图更新和新图获取')
-            for i in range(latest-500,latest+500):
-                get_gif(i)
             print('开始生成每日一莫')
             get_dailypost(1)
             print('开始生成每周最佳')
