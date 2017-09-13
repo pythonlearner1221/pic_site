@@ -23,7 +23,7 @@
         background-image:url('{% static 'images/background.jpg' %}');
         background-repeat: no-repeat;
         background-attachment: fixed;
-        padding-top:38px
+        padding-top:62px
     }
     .main.container {
         background-color:rgba(0,0,0,0.1);
@@ -45,39 +45,47 @@
         padding: 0;
       }
       body {
-        padding-top:30px
+        padding-top:50px
       }
     }
   </style>
 </head>
 <body>
-  <div class="ui fixed borderless menu grid">
+  <div class="ui grid">
     <div class="computer tablet only row" style="padding:0">
-{#      <div class="ui sub container" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)">#}
-        <a class="item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
-        <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
-        <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
-        <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
-        <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
-        <a class="item" href="{% url 'pics:pics' %}">朕的江山</a>
-        {% block search %}
-        {% endblock search %}
-{#      </div>#}
-    </div>
-    <div class="mobile only row" style="padding:0">
-      <a class="left item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
-      <div class=" item">{{ from }}</div>
-      <div class="ui dropdown right item">
-        <span class="text">菜单</span>
-        <i class="dropdown icon"></i>
-        <div class="menu">
+      <div class="ui fixed menu" style="background-color: rgba(0,0,0,0);border:0;box-shadow:0 0 0 0 ">
+        <div class="ui container" style="background-color:white">
+          <a class="item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
           <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
           <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
           <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
           <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
           <a class="item" href="{% url 'pics:pics' %}">朕的江山</a>
+          {% block search %}
+          {% endblock search %}
         </div>
       </div>
+{#      <div class="ui sub container" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)">#}
+
+{#      </div>#}
+    </div>
+    <div class="mobile only row" style="padding:0">
+      <div class="ui fixed borderless menu">
+        <a class="left item" href="{% url 'dailypost:index' %}"><img class="ui image" style="width:40px" src="{% static 'images/logo.png' %}"></a>
+        <div class=" item">{{ from }}</div>
+        <div class="ui dropdown right item">
+          <span class="text">菜单</span>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" href="{% url 'dailypost:category' 1 %}">每日一莫</a>
+            <a class="item" href="{% url 'dailypost:category' 2 %}">一周最佳</a>
+            <a class="item" href="{% url 'pics:pretty' %}">后宫佳丽</a>
+            <a class="item" href="{% url 'pics:random' %}">朕要翻牌</a>
+            <a class="item" href="{% url 'pics:pics' %}">朕的江山</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
