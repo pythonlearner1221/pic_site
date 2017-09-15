@@ -22,28 +22,28 @@ def make_weixinpost():
 
 if __name__=='__main__':
     while True:
-        print('开启定时任务')
+        print('start timing task')
         latest = latest_get()
-        print('昨天获取到', latest, '开始更新')
-        print('开始进行旧图更新和新图获取')
+        print('latest index', latest)
+        print('start updating and getting new info')
         for i in range(latest - 50, latest + 50):
             get_gif(i)
         if datetime.now().hour == 12:
-            print('开始生成每日一莫')
+            print('start generating daily yimo')
             get_dailypost(1)
-            print('开始生成每周最佳')
+            print('start generating weekly best')
             weekly_best(1)
-            print('开始生成微信每日一莫')
+            print('start generating daily yimo for public')
             if make_weixinpost():
                 get_weixinpost(1)
             else:
-                print('昨天图片尚未分类')
+                print('exists unclassified yesterday\'s pics')
 
         if datetime.now().hour == 17:
-            print('开始生成微信每日一莫')
+            print('start generating daily yimo for public')
             if make_weixinpost():
                 get_weixinpost(1)
             else:
-                print('昨天图片尚未分类')
+                print('exists unclassified yesterday\'s pics')
 
         time.sleep(3600)

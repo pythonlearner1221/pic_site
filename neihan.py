@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import sqlite3 as lite
 from multiprocessing import Pool
 from datetime import datetime,timedelta
-
+import io
+from PIL import Image
 
 def get_gif(num):
     url = 'http://neihan1024.com/weibofun/weixin/article.php?fid={}&category=weibo_pics&source=1'.format(num)
@@ -21,27 +22,37 @@ def get_gif(num):
                 else:
                     pic_size = len(res2.content)
                     types = img_url.split('.')[-1]
-                    if 'gif' in types:\
-                        category ='gif'
+                    if 'gif' in types:
+                        image_bytes = res2.content
+                        data_stream = io.BytesIO(image_bytes)
+                        image = Image.open(data_stream)
+                        try:
+                            image.seek(1)
+                            category = 'gif'
+                        except:
+                            category = 'error'
                     else:
                         category = 'pic'
-                    title = soup.select('p')[0].text.strip()
-                    created_time = soup.select('div.info_text')[0].text[:10]
-                    today = str(datetime.now().date())
-                    days_later = str(datetime.now().date()+timedelta(days=30))
-                    if created_time > days_later:
-                        created_time = today
-                        hidden =1
-                    elif created_time >today:
-                        created_time = today
-                        hidden=0
+                    if category !='error':
+                        title = soup.select('p')[0].text.strip()
+                        created_time = soup.select('div.info_text')[0].text[:10]
+                        today = str(datetime.now().date())
+                        days_later = str(datetime.now().date()+timedelta(days=30))
+                        if created_time > days_later:
+                            created_time = today
+                            hidden =1
+                        elif created_time >today:
+                            created_time = today
+                            hidden=0
+                        else:
+                            hidden=0
+                        pic_index = 'neihantupian-{}'.format('0'*(6-len(str(num)))+str(num))
+                        likes = int(soup.select('body > div:nth-of-type(2)')[0].text.split('\xa0')[0].strip('赞'))
+                        result = save_to_sqlite(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
+                        print(num,result)
+                        # print(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
                     else:
-                        hidden=0
-                    pic_index = 'neihantupian-{}'.format('0'*(6-len(str(num)))+str(num))
-                    likes = int(soup.select('body > div:nth-of-type(2)')[0].text.split('\xa0')[0].strip('赞'))
-                    result = save_to_sqlite(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
-                    print(num,result)
-                    # print(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
+                        print(num,'gif error')
         else:
             pass
     except Exception as e:
@@ -60,17 +71,17 @@ def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_si
                           url = '{}' , category = '{}' ,title='{}' ,hidden={} WHERE pic_index = '{}'"\
                           .format(likes,created_time,pic_size,url,category,title,hidden,pic_index)
                 cur.execute(update)
-                return '更新成功'
+                return 'updated'
             except Exception as e:
-                print('更新失败')
+                print('update error')
                 print(e)
         else:
             try:
                 insert = "INSERT INTO pics_pics (title, url, created_time,likes,category,pic_index,hidden,pic_size) VALUES (?,?,?,?,?,?,?,?)"
                 cur.execute(insert,(title,url,created_time,likes,category,pic_index,hidden,pic_size))
-                return '插入成功'
+                return 'inserted'
             except:
-                print('插入失败')
+                print('insert error')
 
 
 def latest_get():
@@ -85,7 +96,7 @@ if __name__ == '__main__':
     pool = Pool()
     latest = latest_get()
     print(latest)
-    pool.map(get_gif,range(latest-500,latest+500))
+    pool.map(get_gif,range(latest-100,latest+100))
     # pool.map(get_gif, range(160000, 179000))
 
 

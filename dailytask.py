@@ -25,17 +25,18 @@ def make_weixinpost():
         return False
 
 if __name__=='__main__':
+    print('start daily task')
     latest = latest_get()
-    print('昨天获取到',latest,'开始更新')
-    print('开始进行旧图更新和新图获取')
-    for i in range(latest-500,latest+500):
+    print('latest index', latest)
+    print('start updating and getting new info')
+    for i in range(latest - 50, latest + 50):
         get_gif(i)
-    print('开始生成每日一莫')
+    print('start generating daily yimo')
     get_dailypost(1)
-    print('开始生成每周最佳')
+    print('start generating weekly best')
     weekly_best(1)
-    print('开始生成微信每日一莫')
+    print('start generating daily yimo for public')
     if make_weixinpost():
         get_weixinpost(1)
     else:
-        print('昨天图片尚未分类')
+        print('exists unclassified yesterday\'s pics')
