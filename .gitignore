@@ -108,3 +108,6 @@ static/for_cl/
 
 #settings
 pic_site/settings.py
+
+#fabfile
+fabfile.py
