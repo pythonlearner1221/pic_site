@@ -5,6 +5,7 @@ from multiprocessing import Pool
 from datetime import datetime,timedelta
 import io
 from PIL import Image
+import hashlib
 
 def get_gif(num):
     url = 'http://neihan1024.com/weibofun/weixin/article.php?fid={}&category=weibo_pics&source=1'.format(num)
@@ -21,6 +22,7 @@ def get_gif(num):
                     pass
                 else:
                     pic_size = len(res2.content)
+                    hashcode=get_hash(res2.content)
                     types = img_url.split('.')[-1]
                     if 'gif' in types:
                         image_bytes = res2.content
@@ -48,7 +50,7 @@ def get_gif(num):
                             hidden=0
                         pic_index = 'neihantupian-{}'.format('0'*(6-len(str(num)))+str(num))
                         likes = int(soup.select('body > div:nth-of-type(2)')[0].text.split('\xa0')[0].strip('赞'))
-                        result = save_to_sqlite(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
+                        result = save_to_sqlite(title,img_url,created_time,likes,category,pic_index,hidden,pic_size,hashcode)
                         print(num,result)
                         # print(title,img_url,created_time,likes,category,pic_index,hidden,pic_size)
                     else:
@@ -59,17 +61,17 @@ def get_gif(num):
         print(num,e)
 
 
-def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_size):
+def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_size,hashcode):
     with lite.connect('db.sqlite3') as con:
         cur = con.cursor()
-        select = "SELECT * FROM pics_pics WHERE pic_index='{}'".format(pic_index)
+        select = "SELECT * FROM pics_pics WHERE hashcode='{}'".format(hashcode)
         cur.execute(select)
         res = cur.fetchall()
         if len(res) >0:
             try:
                 update = "UPDATE pics_pics set likes={} , created_time='{}' , pic_size = {} ,\
-                          url = '{}' , category = '{}' ,title='{}' ,hidden={} WHERE pic_index = '{}'"\
-                          .format(likes,created_time,pic_size,url,category,title,hidden,pic_index)
+                          url = '{}' , category = '{}' ,title='{}' ,hidden={} ,pic_index = '{}' WHERE hashcode = '{}'"\
+                          .format(likes,created_time,pic_size,url,category,title,hidden,pic_index,hashcode)
                 cur.execute(update)
                 return 'updated'
             except Exception as e:
@@ -77,12 +79,16 @@ def save_to_sqlite(title,url,created_time,likes,category,pic_index,hidden,pic_si
                 print(e)
         else:
             try:
-                insert = "INSERT INTO pics_pics (title, url, created_time,likes,category,pic_index,hidden,pic_size) VALUES (?,?,?,?,?,?,?,?)"
-                cur.execute(insert,(title,url,created_time,likes,category,pic_index,hidden,pic_size))
+                insert = "INSERT INTO pics_pics (title, url, created_time,likes,category,pic_index,hidden,pic_size,hashcode) VALUES (?,?,?,?,?,?,?,?,?)"
+                cur.execute(insert,(title,url,created_time,likes,category,pic_index,hidden,pic_size,hashcode))
                 return 'inserted'
             except:
                 print('insert error')
 
+def get_hash(content):
+    md5 = hashlib.md5()
+    md5.update(content)
+    return md5.hexdigest()
 
 def latest_get():
     with lite.connect('db.sqlite3') as con:

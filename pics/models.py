@@ -24,6 +24,7 @@ class Pics(models.Model):
     pic_index = models.CharField(max_length=200,blank=True,null=True)
     tags = models.ManyToManyField(Tags,blank=True)
     pic_size = models.PositiveIntegerField(blank=True,default=0)
+    hashcode = models.CharField(max_length=100,blank=True)
 
     def __str__(self):
         return self.title[:20]
