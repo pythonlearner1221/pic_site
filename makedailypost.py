@@ -187,7 +187,6 @@ def get_toutiaopost(xyz):
     today = datetime.now().date()
     day = today - timedelta(days=xyz)
     tag1 = Tags.objects.get(name='妹子图片')
-    tag2 = Tags.objects.get(name='妹子动图')
     try:
         if len(HiddenPost.objects.filter(created_time=day, category='头条一莫')) == 0:
             if len(Pics.objects.filter(created_time=day,hidden=0)) >= 30:
@@ -264,4 +263,4 @@ def get_toutiaopost(xyz):
 if __name__ == '__main__':
     get_dailypost(1)
     get_weixinpost(1)
-    # get_toutiaopost(1)
+    get_toutiaopost(1)
