@@ -39,11 +39,11 @@ def get_gif(num):
                         title = soup.select('p')[0].text.strip()
                         created_time = soup.select('div.info_text')[0].text[:10]
                         today = str(datetime.now().date())
-                        days_later = str(datetime.now().date()+timedelta(days=30))
-                        if created_time > days_later:
-                            created_time = today
-                            hidden =1
-                        elif created_time >today:
+                        # days_later = str(datetime.now().date()+timedelta(days=30))
+                        # if created_time > days_later:
+                        #     created_time = today
+                        #     hidden =1
+                        if created_time >today:
                             created_time = today
                             hidden=0
                         else:
