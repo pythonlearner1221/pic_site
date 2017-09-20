@@ -19,8 +19,8 @@ class IndexView(ListView):
     paginate_by = 10
     ordering=['-created_time','-id']
 
-    # def get_queryset(self):
-    #     return super(IndexView,self).get_queryset().filter(hidden=0)
+    def get_queryset(self):
+        return super(IndexView,self).get_queryset().filter(~Q(title='动图'),~Q(title='福利'))
 
     def get_context_data(self, **kwargs):
         """
