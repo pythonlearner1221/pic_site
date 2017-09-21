@@ -368,7 +368,9 @@ def choose_tag(request,tag):
             pic.tags.add(Tags.objects.get(name='妹子图片'))
         if pic.category == 'gif':
             pic.tags.add(Tags.objects.get(name='妹子动图'))
-        pic.created_time = datetime.now().date()-timedelta(days=1)
+        if pic.created_time < today-timedelta(days=1):
+            pic.likes=0
+            pic.created_time = today-timedelta(days=1)
         pic.save()
     if tag == '0':
         pic = Pics.objects.filter(hidden=0, tags__isnull=True,created_time__lt=today).order_by('created_time','id').last()

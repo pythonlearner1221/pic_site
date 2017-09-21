@@ -6,7 +6,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ['title','created_time','image_tag']
     list_display_links = ['title','image_tag']
     list_filter = ('hidden','tags','category')
-    fields = ('title','large_image_tag','tags','category','hidden','pic_index','pic_size')
+    fields = ('title','large_image_tag','tags',('category','hidden'),('pic_index','pic_size','likes'))
     date_hierarchy = 'created_time'
     list_per_page = 20
     search_fields = ('title','url')
