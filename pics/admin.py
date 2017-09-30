@@ -3,7 +3,7 @@ from .models import Pics
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title','created_time','image_tag']
+    list_display = ['title','created_time','image_tag','likes']
     list_display_links = ['title','image_tag']
     list_filter = ('hidden','tags','category')
     fields = ('title','large_image_tag','tags',('category','hidden'),('pic_index','pic_size','likes'))
