@@ -36,7 +36,8 @@ if __name__=='__main__':
     print('start generating weekly best')
     weekly_best(1)
     print('start generating daily yimo for public')
-    if make_weixinpost():
-        get_weixinpost(1)
-    else:
-        print('exists unclassified yesterday\'s pics')
+    get_weixinpost(1)
+    # if make_weixinpost():
+    #     get_weixinpost(1)
+    # else:
+    #     print('exists unclassified yesterday\'s pics')

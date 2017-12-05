@@ -11,6 +11,7 @@ import random
 from django.contrib.auth.models import User
 import re
 from django.db.models import Q
+import requests
 
 def get_dailypost(xyz):
     today = datetime.now().date()
@@ -161,7 +162,10 @@ def get_weixinpost(xyz):
                 for i in fuli:
                     fuli_text += '![](' + i + ')\n\n'
                 for i in dongtu:
-                    fuli_text += '![](' + i + ')\n\n'
+                    if len(requests.get(i).content) < 2000000:
+                        fuli_text += '![](' + i + ')\n\n'
+                    else:
+                        pass
                 body = body + fuli_text
 
                 title = '[每日一莫' + created_time.strftime('%y%m%d') + ']' + title
