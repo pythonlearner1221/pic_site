@@ -6,7 +6,7 @@
   {% if error_msg %}
     <div class="item"><p>{{ error_msg }}</p></div>
   {% endif %}
-  <div class="item" ><a href="{% static 'for_cl/for_cl.txt' %}">今日文档</a></div>
+{#  <div class="item" ><a href="{% static 'for_cl/for_cl.txt' %}">今日文档</a></div>#}
   {% for post in post_list %}
   <div class="item">
     <a href="{{ post.get_absolute_url }}" class="image" style="overflow:hidden;vertical-align:middle;height:150px">

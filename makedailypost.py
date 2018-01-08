@@ -73,7 +73,7 @@ def get_dailypost(xyz):
 
                 body_for_cl=''
                 for i in range(0,30):
-                    text = '【{}】{}\n[img]{}[/img]\n'.format((i+1),post_list[i].title,post_list[i].url)
+                    text = '【{}】{}\n\n[img]{}[/img]\n\n'.format((i+1),post_list[i].title,post_list[i].url)
                     body_for_cl+=text
                 fuli_for_cl='【31】每日福利\n'
                 for i in fuli:
@@ -100,7 +100,7 @@ def get_dailypost(xyz):
                 c.views = views
                 c.save()
                 d = HiddenPost()
-                d.title = title
+                d.title = title_for_cl
                 d.created_time = created_time
                 d.body = body+'\n'+title_for_cl+'\n'+body_for_cl
                 d.image = image
