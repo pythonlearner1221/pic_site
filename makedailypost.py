@@ -99,6 +99,13 @@ def get_dailypost(xyz):
                 c.author=user
                 c.views = views
                 c.save()
+                d = HiddenPost()
+                d.title = title
+                d.created_time = created_time
+                d.body = body+'\n'+title_for_cl+'\n'+body_for_cl
+                d.image = image
+                d.category = 'CL一莫'
+                d.save()
                 print(created_time,'saved')
             else:
                 print('资源太少，凑不够一篇文章')
