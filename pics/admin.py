@@ -2,6 +2,10 @@ from django.contrib import admin
 from .models import Pics
 # Register your models here.
 
+def hidd(modeladmin,request,queryset):
+    queryset.update(hidden=1)
+hidd.short_description='hidden'
+
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title','created_time','image_tag','likes']
     list_display_links = ['title','image_tag']
@@ -13,6 +17,7 @@ class PostAdmin(admin.ModelAdmin):
     ordering=('-id','-created_time',)
     filter_horizontal = ('tags',)
     readonly_fields = ('image_tag','large_image_tag')
+    actions=[hidd]
 
 class PicAdmin(admin.ModelAdmin):
     list_display = ['title','image_tag']
