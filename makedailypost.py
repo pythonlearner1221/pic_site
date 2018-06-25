@@ -122,18 +122,18 @@ def get_weixinpost(xyz):
     tag2 = Tags.objects.get(name='妹子动图')
     try:
         if len(HiddenPost.objects.filter(created_time=day, category='微信一莫')) == 0:
-            if len(Pics.objects.filter(created_time=day,pic_size__lt=2000000,pic_size__gt=0,hidden=0)) >= 30:
+            if len(Pics.objects.filter(created_time=day,pic_size__lt=2000000,pic_size__gt=0,hidden=0)) >= 60:
                 post_list = []
 
                 ####likes
                 gifs = Pics.objects.filter(created_time=day, category='gif',pic_size__lt=2000000,pic_size__gt=0,hidden=0).order_by('-likes')
                 pics = Pics.objects.filter(created_time=day, category='pic',pic_size__lt=2000000,pic_size__gt=0,hidden=0).order_by('-likes')
-                if len(gifs) < 15:
+                if len(gifs) < 30:
                     post_list.extend(gifs)
-                    post_list.extend(pics[0:(30 - len(gifs))])
+                    post_list.extend(pics[0:(60 - len(gifs))])
 
-                elif len(pics) < 15:
-                    post_list.extend(gifs[0:(30 - len(pics))])
+                elif len(pics) < 30:
+                    post_list.extend(gifs[0:(60 - len(pics))])
                     post_list.extend(pics)
 
                 # elif len(pics) > 40 and len(gifs) > 40:
@@ -141,11 +141,11 @@ def get_weixinpost(xyz):
                 #     post_list.extend(random.sample(pics[:30], k=15))
 
                 else:
-                    post_list.extend(gifs[0:15])
-                    post_list.extend(pics[0:15])
+                    post_list.extend(gifs[0:30])
+                    post_list.extend(pics[0:30])
 
                 title = post_list[1].title
-                for i in range(0, 30):
+                for i in range(0, 60):
                     if 15 <= len(post_list[i].title) < 25:
                         title = post_list[i].title
                         break
@@ -160,7 +160,7 @@ def get_weixinpost(xyz):
                 except:
                     created_time = pics[0].created_time
                 body = ''
-                for i in range(0, 30):
+                for i in range(0, 60):
                     text = '#### 【{}】{}\n![]({})\n'.format((i + 1), post_list[i].title, post_list[i].url)
                     body += text
                 fuli = [i.url for i in random.sample(list(Pics.objects.filter(~Q(created_time=day), tags=tag1, )), k=4)]
